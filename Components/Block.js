@@ -5,18 +5,30 @@ import {View, Text} from 'react-native';
 const Block = props => {
   return (
     <View
-      onStartShouldSetResponder={() => props.handlePress(props.index)}
+      onStartShouldSetResponder={
+        props.field === 'empty'
+          ? () => props.handlePress(props.index)
+          : () => console.log('already clicked')
+      }
       style={{
+        borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'yellow',
+        backgroundColor: '#fffdd0',
         width: 120,
         height: 120,
         borderWidth: 1,
         borderColor: 'grey',
         margin: 1,
       }}>
-      <Text>{props.index}</Text>
+      {props.field === 'empty' ? (
+        ''
+      ) : (
+        <Text
+          style={{fontSize: 50, color: props.field === 'O' ? 'black' : 'red'}}>
+          {props.field}
+        </Text>
+      )}
     </View>
   );
 };

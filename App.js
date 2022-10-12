@@ -6,6 +6,7 @@ import Home from './Components/Home';
 import ScoreGame from './Components/ScoreGame';
 import PlayGame from './Components/PlayGame';
 import Game from './Components/Game';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {

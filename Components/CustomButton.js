@@ -4,15 +4,19 @@ import {Pressable, Text} from 'react-native';
 
 export const CustomButton = props => {
   const {title = 'no-title', styles, navigation, navigateTo} = props;
+  const navigationFun = () => {
+    return navigation.navigate(navigateTo, {
+      name: navigateTo,
+      namePlayer1: props.namePlayer1,
+      namePlayer2: props.namePlayer2,
+    });
+  };
   return (
     <>
       <Pressable
         style={styles}
-        onPress={() =>
-          navigation.navigate(navigateTo, {
-            name: navigateTo,
-          })
-        }>
+        disabled={props.disabled}
+        onPress={navigationFun}>
         <Text style={{fontWeight: 'bold', color: '#ffffff', fontSize: 20}}>
           {title}
         </Text>
@@ -20,4 +24,3 @@ export const CustomButton = props => {
     </>
   );
 };
-// export default CustomButton;

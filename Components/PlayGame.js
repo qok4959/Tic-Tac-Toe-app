@@ -5,72 +5,67 @@ import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {CustomButton} from './CustomButton';
 
 const PlayGame = props => {
-  const [name, setName] = React.useState('');
+  const [namePlayer1, setNamePlayer1] = React.useState('');
+  const [namePlayer2, setNamePlayer2] = React.useState('');
   const [buttonON, setButtonOn] = React.useState(false);
-
-  const handleChange = e => {
-    setName(e);
-  };
-
   useEffect(() => {
-    if (name == '') {
+    if (namePlayer1 == '' || namePlayer2 == '' || namePlayer1 === namePlayer2) {
       console.log('empty');
       setButtonOn(false);
     } else {
       console.log('full');
       setButtonOn(true);
     }
-  }, [name]);
+  }, [namePlayer1, namePlayer2]);
 
-  console.log(name);
   return (
     <>
       <Text style={styles.sectionHeader}>Tic-TacToe</Text>
       <View style={styles.sectionContainer}>
-        <TextInput
-          onChangeText={e => handleChange(e)}
-          style={styles.sectionName}
-          placeholder="enter your name"></TextInput>
-      </View>
-      {buttonON ? (
         <View
           style={{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
+          }}>
+          <TextInput
+            onChangeText={newText => setNamePlayer1(newText)}
+            style={styles.sectionName}
+            placeholder="enter first player name"></TextInput>
+
+          <TextInput
+            onChangeText={newText => setNamePlayer2(newText)}
+            style={styles.sectionName}
+            placeholder="enter second player name"></TextInput>
+        </View>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'flex-end',
             marginBottom: 40,
           }}>
           <CustomButton
-            styles={styles.btnSubmit}
+            disabled={!buttonON}
+            styles={buttonON ? styles.btnSubmitOn : styles.btnSubmitOff}
             title="New game"
+            namePlayer1={namePlayer1}
+            namePlayer2={namePlayer2}
             navigation={props.navigation}
             navigateTo="game-screen"
           />
         </View>
-      ) : (
-        /*{ <TouchableWithoutFeedback
-          style={styles.sectionBottom}
-          onPress={e => handleChange(e)}>
-          <View style={styles.btnSubmit}>
-            <Text style={styles.textBtn}>New game</Text>
-          </View>
-        </TouchableWithoutFeedback> }*/
-
-        ''
-      )}
+      </View>
     </>
-    // </View>
   );
 };
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    // flexDirection: 'row',
-
     minHeight: '80%',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 20,
   },
   sectionHeader: {
     color: 0x00b3b3,
@@ -80,9 +75,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   sectionName: {
-    fontSize: 30,
+    fontSize: 20,
+    minWidth: '70%',
+    maxWidth: '70%',
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: 'black',
   },
-  btnSubmit: {
+  btnSubmitOn: {
     backgroundColor: '#24a0ed',
     margin: 10,
     width: 180,
@@ -90,12 +90,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textBtn: {
-    alignItems: 'center',
+  btnSubmitOff: {
+    backgroundColor: 'grey',
+    margin: 10,
+    width: 180,
+    height: 35,
     justifyContent: 'center',
-    fontWeight: 'bold',
-    fontSize: 30,
-    color: '#ffffff',
+    alignItems: 'center',
   },
   sectionBottom: {
     backgroundColor: 'red',
