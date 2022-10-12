@@ -129,12 +129,20 @@ const Game = ({route}) => {
 
   useEffect(() => {
     if (gameFinished) {
-      addData(winner, players);
+      addData(
+        winner === 'O' || winner === 'X'
+          ? winner === 'O'
+            ? 'X'
+            : 'O'
+          : 'draw',
+        players,
+      );
     }
   }, [winner]);
 
   const generatedBlocks = blocks.map(i => (
     <Block
+      gameFinished={gameFinished}
       handlePress={handlePress}
       key={i.index}
       index={i.index}

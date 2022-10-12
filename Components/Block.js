@@ -6,9 +6,11 @@ const Block = props => {
   return (
     <View
       onStartShouldSetResponder={
-        props.field === 'empty'
-          ? () => props.handlePress(props.index)
-          : () => console.log('already clicked')
+        !props.gameFinished
+          ? props.field === 'empty'
+            ? () => props.handlePress(props.index)
+            : () => console.log('already clicked')
+          : () => console.log('finished game')
       }
       style={{
         borderRadius: 5,
