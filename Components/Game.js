@@ -138,8 +138,8 @@ const Game = ({route}) => {
       addData(
         winner === 'O' || winner === 'X'
           ? winner === 'O'
-            ? 'X'
-            : 'O'
+            ? players[0]
+            : players[1]
           : 'draw',
         players,
       );

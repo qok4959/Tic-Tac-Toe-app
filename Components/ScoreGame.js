@@ -1,58 +1,68 @@
 import React from 'react';
-import {SafeAreaView, Text, Pressable, StyleSheet, View} from 'react-native';
-import {COLOR_BACKGROUND} from '../config/constants.js';
+import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  COLOR_BACKGROUND,
+  COLOR_PRIMARY,
+  COLOR_SECONDARY,
+} from '../config/constants.js';
 import * as actions from '../model/actions.js';
 import {useEffect} from 'react';
+import {Table, Row, Rows} from 'react-native-table-component';
+import Header from './Header.js';
 
 const ScoreGame = () => {
   const [allData, setAllData] = React.useState();
-  let data = [];
 
   useEffect(() => {
-    console.log('useEffect');
-    data = actions.retrieveData().then(x => {
-      // console.log('typeof', typeof Object.values(x));
-      // console.log(x);
-      // console.log(x);
+    actions.retrieveData().then(x => {
       setAllData(x);
     });
   }, []);
 
-  // const arr = [];
-  // console.log('ScoreGame', allData[0]['players']);
-  // allData.map(x => {
-  //   arr.push(x['players']);
-  // });
+  const data =
+    allData !== undefined && allData.map(x => [x['players'], x['winner']]);
+  const header = ['Players', 'Winner'];
 
-  // console.log('ALLDATA', allData);
-  // console.log('arr=', arr);
-
-  // let DataToRender = <></>;
-  useEffect(() => {
-    // DataToRender = arr.map(x => (
-    //   <View key={x}>
-    //     <Text>{x}</Text>
-    //   </View>
-    // ));
-    // console.log('TESTSTSTST', allData[0]);
-  }, [allData]);
-
-  // console.log(allData.length);
-
-  // console.log('dataLog', data);
   return (
     <SafeAreaView style={styles.sectionContainer}>
-      {/* <Pressable onPress={() => actions.retrieveData()}>
-        <SafeAreaView style={{backgroundColor: 'red'}}>
-          <Text>retrieve retrieve Data</Text>
-        </SafeAreaView>
-      </Pressable>
-      <Pressable onPress={() => actions.addData()}>
-        <SafeAreaView style={{backgroundColor: 'red'}}>
-          <Text>test add Data</Text>
-        </SafeAreaView>
-      </Pressable> */}
-      {/* {allData !== undefined && <DataToRender />} */}
+      <Header />
+
+      <ScrollView style={{maxHeight: '90%'}}>
+        {allData !== undefined && (
+          <Table
+            style={{
+              minWidth: '90%',
+              maxWidth: '90%',
+              marginTop: 30,
+              borderCollapse: 'collapse',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+            borderStyle={{
+              borderWidth: 3,
+              color: COLOR_SECONDARY,
+            }}>
+            <Row
+              textStyle={{
+                color: COLOR_SECONDARY,
+                fontWeight: 'bold',
+                fontSize: 30,
+                textAlign: 'center',
+              }}
+              data={header}
+            />
+            <Rows
+              textStyle={{
+                color: COLOR_PRIMARY,
+                fontWeight: 'bold',
+                fontSize: 20,
+                textAlign: 'center',
+              }}
+              data={data}
+            />
+          </Table>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -61,6 +71,12 @@ const styles = StyleSheet.create({
   sectionContainer: {
     backgroundColor: COLOR_BACKGROUND,
     flex: 1,
+  },
+  sectionScrollView: {
+    marginTop: 90,
+    marginLeft: 20,
+    maxHeight: '80%',
+    maxWidth: '80%',
   },
 });
 

@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     color: COLOR_SECONDARY,
     borderColor: COLOR_PRIMARY,
+    marginBottom: 5,
   },
   btnSubmitOn: {
     backgroundColor: COLOR_PRIMARY,
