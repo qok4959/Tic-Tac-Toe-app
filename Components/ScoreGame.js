@@ -1,71 +1,83 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
-// import * as c from '../config/constants';
-// import {initializeApp} from 'firebase/app';
-// import {getFirestore} from 'firebase/firestore/lite';
-// import {doc, getDoc} from 'firebase/firestore';
+import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  COLOR_BACKGROUND,
+  COLOR_PRIMARY,
+  COLOR_SECONDARY,
+} from '../config/constants.js';
 import * as actions from '../model/actions.js';
-
-// import {initializeApp} from 'firebase/app';
-// import {collection, addDoc, getDocs} from 'firebase/firestore';
-// import {initializeFirestore} from 'firebase/firestore';
-// // Initialize Firebase
-// const firebaseConfig = {
-//   apiKey: c.FIREBASE_API_KEY,
-//   authDomain: c.FIREBASE_AUTH_DOMAIN,
-
-//   projectId: c.FIREBASE_PROJECT_ID,
-//   storageBucket: c.FIREBASE_STORAGE_BUCKET,
-//   messagingSenderId: c.FIREBASE_MESSAGING_SENDER_ID,
-//   appId: c.APP_ID,
-//   measurementId: c.MEASUREMENT_ID,
-// };
-
-// const app = initializeApp(firebaseConfig);
-
-// // for some reason it doesnt work. v
-// // const db = getFirestore(app);
-// const db = initializeFirestore(app, {
-//   experimentalForceLongPolling: true,
-// });
-
-// async function testRetrieveData() {
-//   console.log('test fun is executed');
-//   const querySnapshot = await getDocs(collection(db, 'testCollection'));
-//   querySnapshot.forEach(doc => {
-//     console.log(`${doc.id} => ${doc.data().getDocs}`);
-//   });
-// }
-
-// async function testAddData() {
-//   try {
-//     console.log('test func');
-//     const docRef = await addDoc(collection(db, 'testCollection'), {
-//       first: 'Ada',
-//       last: 'Lovelace',
-//       born: 1815,
-//     });
-//     console.log('Document written with ID: ', docRef.id);
-//   } catch (e) {
-//     console.error('Error adding document: ', e);
-//   }
-// }
+import {useEffect} from 'react';
+import {Table, Row, Rows} from 'react-native-table-component';
+import Header from './Header.js';
 
 const ScoreGame = () => {
+  const [allData, setAllData] = React.useState();
+
+  useEffect(() => {
+    actions.retrieveData().then(x => {
+      setAllData(x);
+    });
+  }, []);
+
+  const data =
+    allData !== undefined && allData.map(x => [x['players'], x['winner']]);
+  const header = ['Players', 'Winner'];
+
   return (
-    <View>
-      <Pressable onPress={() => actions.retrieveData()}>
-        <View style={{backgroundColor: 'red'}}>
-          <Text>retrieve retrieve Data</Text>
-        </View>
-      </Pressable>
-      <Pressable onPress={() => actions.addData()}>
-        <View style={{backgroundColor: 'red'}}>
-          <Text>test add Data</Text>
-        </View>
-      </Pressable>
-    </View>
+    <SafeAreaView style={styles.sectionContainer}>
+      <Header />
+
+      <ScrollView style={{maxHeight: '90%'}}>
+        {allData !== undefined && (
+          <Table
+            style={{
+              minWidth: '90%',
+              maxWidth: '90%',
+              marginTop: 30,
+              borderCollapse: 'collapse',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+            borderStyle={{
+              borderWidth: 3,
+              color: COLOR_SECONDARY,
+            }}>
+            <Row
+              textStyle={{
+                color: COLOR_SECONDARY,
+                fontWeight: 'bold',
+                fontSize: 30,
+                textAlign: 'center',
+              }}
+              data={header}
+            />
+            <Rows
+              textStyle={{
+                color: COLOR_PRIMARY,
+                fontWeight: 'bold',
+                fontSize: 20,
+                textAlign: 'center',
+              }}
+              data={data}
+            />
+          </Table>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    backgroundColor: COLOR_BACKGROUND,
+    flex: 1,
+  },
+  sectionScrollView: {
+    marginTop: 90,
+    marginLeft: 20,
+    maxHeight: '80%',
+    maxWidth: '80%',
+  },
+});
 
 export default ScoreGame;

@@ -1,20 +1,23 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {View, Text} from 'react-native';
+import {SafeAreaView, Text} from 'react-native';
+import {COLOR_SECONDARY} from '../config/constants';
 
 const Block = props => {
   return (
-    <View
+    <SafeAreaView
       onStartShouldSetResponder={
-        props.field === 'empty'
-          ? () => props.handlePress(props.index)
-          : () => console.log('already clicked')
+        !props.gameFinished
+          ? props.field === 'empty'
+            ? () => props.handlePress(props.index)
+            : () => console.log('already clicked')
+          : () => console.log('finished game')
       }
       style={{
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fffdd0',
+        backgroundColor: COLOR_SECONDARY,
         width: 120,
         height: 120,
         borderWidth: 1,
@@ -29,7 +32,7 @@ const Block = props => {
           {props.field}
         </Text>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

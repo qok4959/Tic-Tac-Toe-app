@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
+import {COLOR_BACKGROUND, COLOR_PRIMARY} from '../config/constants';
 import {CustomButton} from './CustomButton';
+import Header from './Header.js';
 const Home = ({navigation}) => {
   return (
     <>
-      <View style={styles.sectionContainer}>
+      <Header />
+      <SafeAreaView style={styles.sectionContainer}>
         <CustomButton
           navigateTo="play-game-screen"
           navigation={navigation}
@@ -18,23 +21,23 @@ const Home = ({navigation}) => {
           styles={styles.buttonSubmit}
           title="Scores tab"
         />
-      </View>
+      </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    backgroundColor: 'yellow',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: COLOR_BACKGROUND,
   },
   button: {
     padding: 50,
   },
   buttonSubmit: {
-    backgroundColor: '#24a0ed',
+    backgroundColor: COLOR_PRIMARY,
     margin: 10,
     width: 180,
     height: 35,
