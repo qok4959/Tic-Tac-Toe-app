@@ -1,8 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Text, Pressable} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, Pressable} from 'react-native';
 import {addData} from '../model/actions';
 import Block from './Block';
+import Header from './Header';
+import {
+  COLOR_PRIMARY,
+  COLOR_SECONDARY,
+  COLOR_BACKGROUND,
+} from '../config/constants.js';
 
 const Game = ({route}) => {
   const [blocks, setBlocks] = React.useState(
@@ -153,19 +159,19 @@ const Game = ({route}) => {
   const ButtonReset = props => {
     return (
       <Pressable onPress={() => props.reseting()}>
-        <View
+        <SafeAreaView
           style={{
             marginTop: 50,
-            backgroundColor: 'red',
+            backgroundColor: COLOR_PRIMARY,
             width: 200,
             height: 40,
             alignItems: 'center',
             justifyContent: 'center',
           }}>
           <Text style={{fontWeight: 'bold', color: '#ffffff', fontSize: 20}}>
-            reset the game
+            Reset the game
           </Text>
-        </View>
+        </SafeAreaView>
       </Pressable>
     );
   };
@@ -175,23 +181,9 @@ const Game = ({route}) => {
   }
   return (
     <>
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          maxWidth: '100%',
-          minWidth: '100%',
-          backgroundColor: 'yellow',
-        }}>
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: 'grey',
-          }}>{`X - ${players[0]} | O - ${players[1]}`}</Text>
-      </View>
+      <Header style={{backgroundColor: 'blue', width: 10, height: 10}} />
 
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {winner !== 'none' ? (
           <Text style={{color: 'white', fontSize: 30, marginBottom: 50}}>
             {winner === 'nobody'
@@ -201,25 +193,54 @@ const Game = ({route}) => {
               : 'Player ' + 'O has just won!'}
           </Text>
         ) : (
-          <Text style={{color: 'white', fontSize: 30, marginBottom: 50}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              minWidth: '100%',
+              maxWidth: '100%',
+              color: COLOR_PRIMARY,
+              fontSize: 30,
+              marginBottom: 50,
+            }}>
             Next turn: {turnO ? 'O' : 'X'}
           </Text>
         )}
 
-        <View style={styles.wrapContainer}>{generatedBlocks}</View>
+        <SafeAreaView style={styles.wrapContainer}>
+          {generatedBlocks}
+        </SafeAreaView>
         {gameFinished ? (
           <ButtonReset reseting={resetTheGame} />
         ) : (
-          <View style={{width: 200, height: 40, marginTop: 50}}></View>
+          <SafeAreaView
+            style={{width: 200, height: 40, marginTop: 50}}></SafeAreaView>
         )}
-      </View>
+      </SafeAreaView>
+      <SafeAreaView
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          maxWidth: '100%',
+          minWidth: '100%',
+          backgroundColor: COLOR_SECONDARY,
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: COLOR_PRIMARY,
+            backgroundColor: COLOR_BACKGROUND,
+            width: '100%',
+            textAlign: 'center',
+          }}>{`X - ${players[0]} | O - ${players[1]}`}</Text>
+      </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'grey',
+    backgroundColor: COLOR_BACKGROUND,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

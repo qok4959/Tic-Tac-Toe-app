@@ -2,11 +2,15 @@ import * as actions from '../config/firebase';
 import {collection, addDoc, getDocs} from 'firebase/firestore';
 
 export async function retrieveData() {
+  const data = [];
   console.log('test fun is executed');
   const querySnapshot = await getDocs(collection(actions.DB, 'scores'));
   querySnapshot.forEach(doc => {
-    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+    data.push(doc.data());
   });
+
+  console.log('in function', data[1]['players']);
+  return data;
 }
 
 export async function addData(winner = 'no data', players = 'no data') {

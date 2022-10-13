@@ -1,71 +1,67 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
-// import * as c from '../config/constants';
-// import {initializeApp} from 'firebase/app';
-// import {getFirestore} from 'firebase/firestore/lite';
-// import {doc, getDoc} from 'firebase/firestore';
+import {SafeAreaView, Text, Pressable, StyleSheet, View} from 'react-native';
+import {COLOR_BACKGROUND} from '../config/constants.js';
 import * as actions from '../model/actions.js';
-
-// import {initializeApp} from 'firebase/app';
-// import {collection, addDoc, getDocs} from 'firebase/firestore';
-// import {initializeFirestore} from 'firebase/firestore';
-// // Initialize Firebase
-// const firebaseConfig = {
-//   apiKey: c.FIREBASE_API_KEY,
-//   authDomain: c.FIREBASE_AUTH_DOMAIN,
-
-//   projectId: c.FIREBASE_PROJECT_ID,
-//   storageBucket: c.FIREBASE_STORAGE_BUCKET,
-//   messagingSenderId: c.FIREBASE_MESSAGING_SENDER_ID,
-//   appId: c.APP_ID,
-//   measurementId: c.MEASUREMENT_ID,
-// };
-
-// const app = initializeApp(firebaseConfig);
-
-// // for some reason it doesnt work. v
-// // const db = getFirestore(app);
-// const db = initializeFirestore(app, {
-//   experimentalForceLongPolling: true,
-// });
-
-// async function testRetrieveData() {
-//   console.log('test fun is executed');
-//   const querySnapshot = await getDocs(collection(db, 'testCollection'));
-//   querySnapshot.forEach(doc => {
-//     console.log(`${doc.id} => ${doc.data().getDocs}`);
-//   });
-// }
-
-// async function testAddData() {
-//   try {
-//     console.log('test func');
-//     const docRef = await addDoc(collection(db, 'testCollection'), {
-//       first: 'Ada',
-//       last: 'Lovelace',
-//       born: 1815,
-//     });
-//     console.log('Document written with ID: ', docRef.id);
-//   } catch (e) {
-//     console.error('Error adding document: ', e);
-//   }
-// }
+import {useEffect} from 'react';
 
 const ScoreGame = () => {
+  const [allData, setAllData] = React.useState();
+  let data = [];
+
+  useEffect(() => {
+    console.log('useEffect');
+    data = actions.retrieveData().then(x => {
+      // console.log('typeof', typeof Object.values(x));
+      // console.log(x);
+      // console.log(x);
+      setAllData(x);
+    });
+  }, []);
+
+  // const arr = [];
+  // console.log('ScoreGame', allData[0]['players']);
+  // allData.map(x => {
+  //   arr.push(x['players']);
+  // });
+
+  // console.log('ALLDATA', allData);
+  // console.log('arr=', arr);
+
+  // let DataToRender = <></>;
+  useEffect(() => {
+    // DataToRender = arr.map(x => (
+    //   <View key={x}>
+    //     <Text>{x}</Text>
+    //   </View>
+    // ));
+    // console.log('TESTSTSTST', allData[0]);
+  }, [allData]);
+
+  // console.log(allData.length);
+
+  // console.log('dataLog', data);
   return (
-    <View>
-      <Pressable onPress={() => actions.retrieveData()}>
-        <View style={{backgroundColor: 'red'}}>
+    <SafeAreaView style={styles.sectionContainer}>
+      {/* <Pressable onPress={() => actions.retrieveData()}>
+        <SafeAreaView style={{backgroundColor: 'red'}}>
           <Text>retrieve retrieve Data</Text>
-        </View>
+        </SafeAreaView>
       </Pressable>
       <Pressable onPress={() => actions.addData()}>
-        <View style={{backgroundColor: 'red'}}>
+        <SafeAreaView style={{backgroundColor: 'red'}}>
           <Text>test add Data</Text>
-        </View>
-      </Pressable>
-    </View>
+        </SafeAreaView>
+      </Pressable> */}
+      {/* {allData !== undefined && <DataToRender />} */}
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionContainer: {
+    backgroundColor: COLOR_BACKGROUND,
+    flex: 1,
+  },
+});
 
 export default ScoreGame;

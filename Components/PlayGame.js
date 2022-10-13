@@ -1,8 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {useEffect} from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, SafeAreaView} from 'react-native';
+import {
+  COLOR_BACKGROUND,
+  COLOR_PRIMARY,
+  COLOR_SECONDARY,
+} from '../config/constants';
 import {CustomButton} from './CustomButton';
+import Header from './Header.js';
 
 const PlayGame = props => {
   const [namePlayer1, setNamePlayer1] = React.useState('');
@@ -20,9 +26,9 @@ const PlayGame = props => {
 
   return (
     <>
-      <Text style={styles.sectionHeader}>Tic-TacToe</Text>
-      <View style={styles.sectionContainer}>
-        <View
+      <Header />
+      <SafeAreaView style={styles.sectionContainer}>
+        <SafeAreaView
           style={{
             flex: 1,
             alignItems: 'center',
@@ -37,8 +43,8 @@ const PlayGame = props => {
             onChangeText={newText => setNamePlayer2(newText)}
             style={styles.sectionName}
             placeholder="enter second player name"></TextInput>
-        </View>
-        <View
+        </SafeAreaView>
+        <SafeAreaView
           style={{
             alignItems: 'center',
             justifyContent: 'flex-end',
@@ -53,8 +59,8 @@ const PlayGame = props => {
             navigation={props.navigation}
             navigateTo="game-screen"
           />
-        </View>
-      </View>
+        </SafeAreaView>
+      </SafeAreaView>
     </>
   );
 };
@@ -63,9 +69,9 @@ const styles = StyleSheet.create({
   sectionContainer: {
     minHeight: '80%',
     flex: 1,
+    backgroundColor: COLOR_BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 20,
   },
   sectionHeader: {
     color: 0x00b3b3,
@@ -79,11 +85,13 @@ const styles = StyleSheet.create({
     minWidth: '70%',
     maxWidth: '70%',
     textAlign: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
+    borderWidth: 4,
+    borderRadius: 25,
+    color: COLOR_SECONDARY,
+    borderColor: COLOR_PRIMARY,
   },
   btnSubmitOn: {
-    backgroundColor: '#24a0ed',
+    backgroundColor: COLOR_PRIMARY,
     margin: 10,
     width: 180,
     height: 35,
