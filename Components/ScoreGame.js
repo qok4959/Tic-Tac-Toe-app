@@ -42,24 +42,8 @@ const ScoreGame = () => {
               borderWidth: 3,
               color: COLOR_SECONDARY,
             }}>
-            <Row
-              textStyle={{
-                color: COLOR_SECONDARY,
-                fontWeight: 'bold',
-                fontSize: 30,
-                textAlign: 'center',
-              }}
-              data={header}
-            />
-            <Rows
-              textStyle={{
-                color: COLOR_PRIMARY,
-                fontWeight: 'bold',
-                fontSize: 20,
-                textAlign: 'center',
-              }}
-              data={data}
-            />
+            <Row textStyle={styles.txtStyleHeader} data={header} />
+            <Rows textStyle={styles.txtStyleRow} data={data} />
           </Table>
         )}
       </ScrollView>
@@ -77,6 +61,18 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     maxHeight: '80%',
     maxWidth: '80%',
+  },
+  txtStyleRow: {
+    color: COLOR_PRIMARY,
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  txtStyleHeader: {
+    color: COLOR_SECONDARY,
+    fontWeight: 'bold',
+    fontSize: 30,
+    textAlign: 'center',
   },
 });
 

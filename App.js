@@ -6,10 +6,14 @@ import Home from './Components/Home';
 import ScoreGame from './Components/ScoreGame';
 import PlayGame from './Components/PlayGame';
 import Game from './Components/Game';
+import {LogBox} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  LogBox.ignoreLogs([
+    'Failed prop type: Invalid prop `textStyle` of type `array` supplied to `Cell`, expected `object`',
+  ]);
   return (
     <NavigationContainer>
       <Stack.Navigator>
