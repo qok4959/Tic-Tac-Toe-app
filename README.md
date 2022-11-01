@@ -1,1 +1,4 @@
-This is a simple Tic-Tac-Toe mobile game using React Native and Firebase.
+# This is a simple Tic-Tac-Toe app.
+## Tech stack:
+- React Native
+- Firebase
